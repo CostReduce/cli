@@ -1,0 +1,29 @@
+# Manifest syntax https://docs.python.org/2/distutils/sourcedist.html
+graft wheelhouse
+
+recursive-exclude __pycache__  *.pyc *.pyo *.orig
+
+exclude *.js*
+exclude *.git*
+exclude *.coveragerc
+exclude *.sh
+exclude proc*
+exclude pylint*
+exclude README*
+
+include requirements*.*
+exclude requirements-dev.*
+include *.py
+
+prune .git
+prune venv
+prune test*
+
+prune tests
+prune tools
+prune docs
+prune .vscode
+prune .github
+prune .azure-pipelines
+global-exclude .travis.yml .gitignore .dockerignore .coveragerc
+global-exclude .codecov.yml requirements*txt tox.ini Makefile .azure-piplines.yml

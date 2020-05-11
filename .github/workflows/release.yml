@@ -1,0 +1,27 @@
+name: Release
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.7
+    - name: Install build-essential
+      run: sudo apt-get install build-essential gcc  -y
+    - name: Install pipenv
+      run: pip3 install -U pipenv
+    - name: Install Deps
+      run: pipenv install --dev --system
+    - name: Build
+      run: python setup.py sdist bdist_wheel
+    - name: Publish
+      run: twine upload dist/*
+      env:
+        TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
+        TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}

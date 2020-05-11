@@ -1,0 +1,18 @@
+repos:
+  -   repo: https://github.com/pre-commit/pre-commit-hooks
+      rev: v2.3.0
+      hooks:
+        -   id: end-of-file-fixer
+        -   id: trailing-whitespace
+        -   id: check-merge-conflict
+        -   id: detect-aws-credentials
+        -   id: fix-encoding-pragma
+  -   repo: https://github.com/psf/black
+      rev: 19.10b0
+      hooks:
+        -   id: black
+            language_version: python3.7
+#  - repo: https://github.com/pre-commit/mirrors-autopep8
+#    rev: v1.4.2
+#    hooks:
+#      - id: autopep8
