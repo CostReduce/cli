@@ -21,7 +21,7 @@ jobs:
     - name: Build
       run: poetry build
     - name: Publish
-      run: poetry publish
+      run: poetry publish -u $MYPYPI_USER -p $MYPYPI_PASSWORD
       env:
         MYPYPI_USER: ${{ secrets.PYPI_USERNAME }}
-        TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+        MYPYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
