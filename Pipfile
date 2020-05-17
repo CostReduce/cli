@@ -25,7 +25,6 @@ coverage = ">=5.1"
 pre-commit = ">=2.3"
 sure = ">= 1.4"
 setuptools-scm = ">= 3.5.0"
-setuptools-scm = "*"
 
 [pipenv]
 allow_prereleases = true
