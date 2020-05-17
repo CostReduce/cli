@@ -24,6 +24,7 @@ pytest-cov = ">=2.8.1"
 coverage = ">=5.1"
 pre-commit = ">=2.3"
 sure = "*"
+setuptools-scm = "*"
 
 [pipenv]
 allow_prereleases = true
