@@ -15,7 +15,7 @@ jobs:
     - name: Install build-essential
       run: sudo apt-get install build-essential gcc  -y
     - name: Install poetry
-      run: pip3 install -U poetry
+      run: pip3 install -U poetry poetry-dynamic-versioning
     - name: Install Deps
       run: poetry install
     - name: Build
