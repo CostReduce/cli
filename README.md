@@ -11,13 +11,13 @@
 Check that you have correctly configured the [AWS cli](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html).
 For install requirements.
 ```
-pipenv install
+poetry install
 ```
 For launch virtual env.
 ```
-pipenv shell
+poetry shell
 ```
 ### Analyze cli
 ```
-python main.py analyze --provider aws --service ec2 --region us-east-1
+python costreduce/main.py analyze --provider aws --service ec2 --region us-east-1
 ```

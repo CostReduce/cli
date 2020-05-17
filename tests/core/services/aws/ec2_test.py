@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import boto3
 from moto import mock_elbv2, mock_ec2
-from src.core.services.aws.ec2 import Ec2
+from costreduce.core.services.aws.ec2 import Ec2
 
 
 @mock_elbv2

@@ -14,14 +14,14 @@ jobs:
         python-version: 3.7
     - name: Install build-essential
       run: sudo apt-get install build-essential gcc  -y
-    - name: Install pipenv
-      run: pip3 install -U pipenv
+    - name: Install poetry
+      run: pip3 install -U poetry
     - name: Install Deps
-      run: pipenv install --dev --system
+      run: poetry install
     - name: Build
-      run: python setup.py sdist bdist_wheel
+      run: poetry build
     - name: Publish
-      run: twine upload dist/*
+      run: poetry publish
       env:
-        TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
+        MYPYPI_USER: ${{ secrets.PYPI_USERNAME }}
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}

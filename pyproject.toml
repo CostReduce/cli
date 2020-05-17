@@ -1,0 +1,38 @@
+[tool.poetry]
+name = "CostReduce"
+description = ""
+version = "0.0.1"
+license = "AGPL-3.0"
+readme = "README.md"
+include = [
+    "LICENSE",
+]
+authors = ["Maxence Maireaux <maxence@maireaux.fr>"]
+
+[tool.poetry-dynamic-versioning]
+enable = true
+vcs = "git"
+style = "semver"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+boto3 = ">=1.13.6"
+click = ">=7.1.2"
+click-log = ">=0.3.2"
+python-dotenv = ">=0.13.0"
+texttable = ">=1.6.2"
+
+[tool.poetry.dev-dependencies]
+pytest = ">=5.4.2"
+black = "==19.*,>=19.10.0.b0"
+coverage = ">=5.1"
+moto = ">=1.3.14"
+pre-commit = ">=2.3"
+pytest-cov = ">=2.8.1"
+sure = ">=1.4"
+poetry-dynamic-versioning = "^0.7.0"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
+
