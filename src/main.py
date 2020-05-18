@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 import logging
-import sys
 import click
 import click_log
-import boto3
-from src.core.services.aws.ec2 import Ec2
+import sys
+from src.core.analyze import Analyze
 from src.utils.format import grid
 
 logger = logging.getLogger()
@@ -39,33 +38,14 @@ def cli():
 )
 def analyze(provider, service, region):
     logger.info("Launch analyze for %s on %s ..." % (service, provider))
+    result = Analyze(provider, service, region)
     if provider == "aws":
-        if service == "ec2":
-            ec2 = Ec2(boto3, region).analyze()
-            grid(ec2, service, provider)
-        else:
-            logger.info(str(service) + " don't allow!")
-            sys.exit(1)
+        response = result.aws()
     else:
         logger.info(str(provider) + " don't allow!")
         sys.exit(1)
 
-
-@cli.command()
-@click.option(
-    "--provider",
-    prompt="Cloud Provider",
-    default="aws",
-    help="Get your Cloud Provider.",
-)
-@click.option(
-    "--service", prompt="Service name", default="ec2", help="Get Service Name."
-)
-@click.option(
-    "--region", prompt="Provider region", default="us-east-1", help="Get Region Name."
-)
-def report(provider, service, region):
-    click.echo("Launch report for %s on %s!" % (service, provider))
+    grid(response, provider, service, region)
 
 
 if __name__ == "__main__":
