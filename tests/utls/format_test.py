@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from costreduce.utils.format import grid
+from src.utils.format import grid
 from textwrap import dedent
 import re
 

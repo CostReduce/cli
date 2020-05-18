@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from costreduce.core.providers.aws import account_id
+from src.core.providers.aws import account_id
 from moto import mock_sts
 
 

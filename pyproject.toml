@@ -36,4 +36,4 @@ requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
 
 [tool.poetry.scripts]
-costreduce = "costreduce.main:cli"
+costreduce = "src.main:cli"

@@ -4,8 +4,8 @@ import sys
 import click
 import click_log
 import boto3
-from costreduce.core.services.aws.ec2 import Ec2
-from costreduce.utils.format import grid
+from src.core.services.aws.ec2 import Ec2
+from src.utils.format import grid
 
 logger = logging.getLogger()
 logging.getLogger("boto3").setLevel(logging.CRITICAL)
