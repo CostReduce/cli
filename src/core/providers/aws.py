@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import logging
 import boto3
+
 # import sys
 # from src.core.services.aws.ec2 import Ec2
 # from src.utils.format import grid
@@ -12,6 +13,7 @@ def account_id():
     response = boto3.client("sts").get_caller_identity().get("Account")
     logger.info("Account ID: " + response)
     return response
+
 
 #
 # class AwsAnalyze:
