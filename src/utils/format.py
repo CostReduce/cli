@@ -5,12 +5,23 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-def grid(data, provider, service, region):
+def grid(desc, provider, service, region):
+    """
+    Create and print grid for result
+
+    Arguments:
+        desc: Description of actions to reduce costs
+        provider: Cloud Provider (aws)
+        service: Cloud Service (ec2,cloudwatch)
+        region: Cloud Provider region
+    Returns:
+        print grid
+    """
     count = 0
     table = Texttable()
     table.set_cols_width([5, 10, 10, 10, 180])
     table.add_rows([["#", "Provider", "Region", "Service", "Description"]])
-    for toto in data:
+    for toto in desc:
         for i in toto:
             table.add_row([count, provider, region, service, i])
             count += 1

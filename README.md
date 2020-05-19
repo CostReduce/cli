@@ -8,11 +8,11 @@
 
 ## Usage
 ### Install
-For use this project, you need to install : 
+For use this project, you need to install :
 ```
 pip install costreduce
 ```
-After install is complete. You can use the `costreduce --help` command. 
+After install is complete. You can use the `costreduce --help` command.
 
 ### First Run
 Check that you have correctly configured the [AWS cli](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html).

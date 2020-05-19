@@ -1,0 +1,26 @@
+site_name: CostReduce Docs
+site_url: https://costreduce.github.io/cli/
+
+
+theme:
+  name: material
+  features:
+    - tabs
+  font: false
+
+
+extra_css:
+    - css/custom.css
+
+plugins:
+  - minify:
+      minify_html: true
+  - search
+  - mkdocstrings:
+      default_handler: python
+      watch:
+        - src
+
+markdown_extensions:
+  - admonition
+  - codehilite

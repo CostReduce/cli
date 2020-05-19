@@ -35,15 +35,9 @@ is_not_empty = dedent(
 
 def test_grid_is_empty():
     result = grid("", "", "", "")
-    print("\n")
-    print(result)
-    print("\n")
     clean(result).should.equal(is_empty)
 
 
 def test_grid_is_not_empty():
     result = grid("test", "AWS", "region", "EC2")
-    print("\n")
-    print(result)
-    print("\n")
     clean(result).should.equal(is_not_empty)

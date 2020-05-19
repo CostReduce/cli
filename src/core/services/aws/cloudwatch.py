@@ -5,11 +5,24 @@ logger = logging.getLogger(__name__)
 
 
 class Cloudwatch:
+    """ Class for all CloudWatch services"""
+
     def __init__(self, sts, region):
+        """
+        init function
+        Arguments:
+            sts: import boto3 globaly
+            region: Cloud Provider region
+        """
         self.region = region
         self.client_logs = sts.client("logs", region_name=region)
 
     def analyze(self):
+        """
+        Function for Analyze all services.
+        Returns:
+            Table for all check
+        """
         analyze = list()
 
         logger.info("Check for CloudWatch Logs")

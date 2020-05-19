@@ -5,12 +5,25 @@ logger = logging.getLogger(__name__)
 
 
 class Ec2:
+    """ Class for all EC2 services """
+
     def __init__(self, sts, region):
+        """
+        init function
+        Arguments:
+            sts: import boto3 globaly
+            region: Cloud Provider region
+        """
         self.region = region
         self.client_ec2 = sts.client("ec2", region_name=region)
         self.client_elbv2 = sts.client("elbv2", region_name=region)
 
     def analyze(self):
+        """
+        Function for Analyze all services.
+        Returns:
+            Table for all check
+        """
         analyze = list()
         # EIP
         logger.info("Check for EIP")
