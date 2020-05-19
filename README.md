@@ -7,6 +7,19 @@
 ![GitHub](https://img.shields.io/github/license/costreduce/cli)
 
 ## Usage
+### Install
+For use this project, you need to install : 
+```
+pip install costreduce
+```
+After install is complete. You can use the `costreduce --help` command. 
+
+### First Run
+Check that you have correctly configured the [AWS cli](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html).
+```
+costreduce analyze --provider aws --service ec2 --region us-east-1
+```
+## Developement
 ### Requirements
 Check that you have correctly configured the [AWS cli](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html).
 For install requirements.
