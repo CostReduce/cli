@@ -42,7 +42,7 @@ def analyze(provider, service, region):
     if provider == "aws":
         response = result.aws()
     else:
-        logger.info(str(provider) + " don't allow!")
+        logger.info("Provider " + str(provider) + " don't allow!")
         sys.exit(1)
 
     grid(response, provider, service, region)

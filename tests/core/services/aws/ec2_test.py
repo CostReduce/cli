@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 import boto3
 from moto import mock_elbv2, mock_ec2
-from src.core.services.aws.ec2 import Ec2
+from src.core.services.aws.ec2 import ApplicationLoadBalancer
 
 
 @mock_elbv2
 def test_get_alb_arn_is_empty(boto3_mock):
-    aws = Ec2(boto3_mock, "us-east-1")
+    aws = ApplicationLoadBalancer(boto3_mock, "us-east-1")
     result = aws.get_elb_arn()
     result.should.equal([])
 
@@ -34,7 +34,7 @@ def test_get_alb_arn_is_not_empty(boto3_mock):
         Tags=[{"Key": "key_name", "Value": "a_value"}],
     )
 
-    aws = Ec2(boto3_mock, "us-east-1")
+    aws = ApplicationLoadBalancer(boto3_mock, "us-east-1")
     result = aws.get_elb_arn()
     result.should.equal(
         ["arn:aws:elasticloadbalancing:us-east-1:1:loadbalancer/my-lb/50dc6c495c0c9188"]

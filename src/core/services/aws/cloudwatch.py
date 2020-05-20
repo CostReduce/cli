@@ -4,6 +4,35 @@ import logging
 logger = logging.getLogger(__name__)
 
 
+class CloudwatchAnalyze:
+    """ Class for Analyze all EC2 Services """
+
+    def __init__(self, sts, region):
+        """
+        init function
+        Arguments:
+            sts: import boto3 globaly
+            region: Cloud Provider region
+        """
+        self.sts = sts
+        self.region = region
+        self.cloudwatch = Cloudwatch(self.sts, self.region)
+
+    def analyze(self):
+        """
+        Function for Analyze all services.
+        Returns:
+            Table for all check
+        """
+        analyze = list()
+
+        logger.info("Check for CloudWatch Logs")
+        analyze.append(self.cloudwatch.get_log_groups())
+
+        logger.debug("Result of analyze : " + str(analyze))
+        return analyze
+
+
 class Cloudwatch:
     """ Class for all CloudWatch services"""
 
@@ -16,20 +45,6 @@ class Cloudwatch:
         """
         self.region = region
         self.client_logs = sts.client("logs", region_name=region)
-
-    def analyze(self):
-        """
-        Function for Analyze all services.
-        Returns:
-            Table for all check
-        """
-        analyze = list()
-
-        logger.info("Check for CloudWatch Logs")
-        analyze.append(self.get_log_groups())
-
-        logger.debug("Result of analyze : " + str(analyze))
-        return analyze
 
     def _list_log_groups(self, next_token=None):
         opts = {"limit": 50}

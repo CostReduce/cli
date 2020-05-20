@@ -8,5 +8,5 @@ logger = logging.getLogger(__name__)
 def account_id():
     """ Get current account id """
     response = boto3.client("sts").get_caller_identity().get("Account")
-    logger.info("Account ID: " + response)
+    logger.debug("Account ID: " + response)
     return response

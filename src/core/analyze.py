@@ -2,8 +2,8 @@
 import logging
 import sys
 import boto3
-from src.core.services.aws.ec2 import Ec2
-from src.core.services.aws.cloudwatch import Cloudwatch
+from src.core.services.aws.ec2 import Ec2Analyze
+from src.core.services.aws.cloudwatch import CloudwatchAnalyze
 
 
 logger = logging.getLogger(__name__)
@@ -29,9 +29,9 @@ class Analyze:
         Entrypoint for AWS provider
         """
         if self.service == "ec2":
-            return Ec2(boto3, self.region).analyze()
+            return Ec2Analyze(boto3, self.region).analyze()
         elif self.service == "cloudwatch":
-            return Cloudwatch(boto3, self.region).analyze()
+            return CloudwatchAnalyze(boto3, self.region).analyze()
         else:
-            logger.info(str(self.service) + " don't allow!")
+            logger.info("Service " + str(self.service) + " don't allow!")
             sys.exit(1)
