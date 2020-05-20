@@ -24,4 +24,3 @@ git remote add origin "${remote_repo}"
 
 poetry run mkdocs build
 poetry run mkdocs gh-deploy --force
-

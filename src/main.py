@@ -25,16 +25,27 @@ def cli():
 
 @cli.command()
 @click.option(
+    "-p",
     "--provider",
     prompt="Cloud Provider",
     default="aws",
     help="Get your Cloud Provider.",
+    type=click.Choice(["aws"], case_sensitive=False),
 )
 @click.option(
-    "--service", prompt="Service name", default="ec2", help="Get Service Name."
+    "-s",
+    "--service",
+    prompt="Service name",
+    default="ec2",
+    help="Get Service Name.",
+    type=click.Choice(["ec2", "cloudwatch"], case_sensitive=False),
 )
 @click.option(
-    "--region", prompt="Provider region", default="us-east-1", help="Get Region Name."
+    "-r",
+    "--region",
+    prompt="Provider region",
+    default="us-east-1",
+    help="Get Region Name.",
 )
 def analyze(provider, service, region):
     logger.info("Launch analyze for %s on %s ..." % (service, provider))
