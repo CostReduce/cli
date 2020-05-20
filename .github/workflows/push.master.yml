@@ -20,6 +20,6 @@ jobs:
     - name: Install Deps
       run: poetry install
     - name: Deploy docs
-      uses: mhausenblas/mkdocs-deploy-gh-pages@master
+      run: bash .github/scripts/deploy.sh
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
