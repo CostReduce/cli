@@ -31,7 +31,8 @@ class Ec2Analyze:
         # Compute Optimizer
         logger.info("Check Compute Optimizer")
         if self.compute_optimizer.is_active():
-            analyze.append(self.compute_optimizer.ec2_recommendation())
+            analyze.append(self.compute_optimizer.ec2_recommendations())
+            analyze.append(self.compute_optimizer.auto_scaling_group_recommendations())
         # EIP
         logger.info("Check for EIP")
         analyze.append(self.ec2.eip_is_not_attached())
@@ -146,21 +147,21 @@ class ComputeOptimizer:
         else:
             return True
 
-    def ec2_recommendation(self):
+    def ec2_recommendations(self):
         response = list()
         get_ec2_recommendation = self.client.get_ec2_instance_recommendations()
         for ec2_recommendation in get_ec2_recommendation["instanceRecommendations"]:
+            ec2_instances_name = ec2_recommendation["instanceName"]
+            ec2_instances_current_instance_type = ec2_recommendation[
+                "currentInstanceType"
+            ]
+            ec2_instances_recommendation_instance_type = ec2_recommendation[
+                "recommendationOptions"
+            ][0]["instanceType"]
             if (
-                ec2_recommendation["currentInstanceType"]
-                != ec2_recommendation["recommendationOptions"][0]["instanceType"]
+                ec2_instances_current_instance_type
+                != ec2_instances_recommendation_instance_type
             ):
-                ec2_instances_name = ec2_recommendation["instanceName"]
-                ec2_instances_current_instance_type = ec2_recommendation[
-                    "currentInstanceType"
-                ]
-                ec2_instances_recommendation_instance_type = ec2_recommendation[
-                    "recommendationOptions"
-                ][0]["instanceType"]
                 data = (
                     "For instance "
                     + ec2_instances_name
@@ -168,6 +169,35 @@ class ComputeOptimizer:
                     + ec2_instances_current_instance_type
                     + " to "
                     + ec2_instances_recommendation_instance_type
+                )
+                if data not in response:
+                    logger.debug(data)
+                    response.append(data)
+        return response
+
+    def auto_scaling_group_recommendations(self):
+        response = list()
+        get_auto_scaling_group_recommendations = (
+            self.client.get_auto_scaling_group_recommendations()
+        )
+        for scaling_group_recommendation in get_auto_scaling_group_recommendations[
+            "autoScalingGroupRecommendations"
+        ]:
+            asg_name = scaling_group_recommendation["autoScalingGroupName"]
+            asg_current = scaling_group_recommendation["currentConfiguration"][
+                "instanceType"
+            ]
+            asg_recommendation = scaling_group_recommendation["recommendationOptions"][
+                0
+            ]["configuration"]["instanceType"]
+            if asg_current != asg_recommendation:
+                data = (
+                    "For AutoScalingGroup "
+                    + asg_name
+                    + " change type "
+                    + asg_current
+                    + " to "
+                    + asg_recommendation
                 )
                 if data not in response:
                     logger.debug(data)
