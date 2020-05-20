@@ -3,8 +3,8 @@ import logging
 import click
 import click_log
 import sys
-from src.core.analyze import Analyze
-from src.utils.format import grid
+from costreduce.core.analyze import Analyze
+from costreduce.utils.format import grid
 
 logger = logging.getLogger()
 logging.getLogger("boto3").setLevel(logging.CRITICAL)

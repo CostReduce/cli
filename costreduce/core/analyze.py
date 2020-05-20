@@ -2,8 +2,8 @@
 import logging
 import sys
 import boto3
-from src.core.services.aws.ec2 import Ec2Analyze
-from src.core.services.aws.cloudwatch import CloudwatchAnalyze
+from costreduce.core.services.aws.ec2 import Ec2Analyze
+from costreduce.core.services.aws.cloudwatch import CloudwatchAnalyze
 
 
 logger = logging.getLogger(__name__)

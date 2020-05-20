@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import logging
-from src.core.providers.aws import account_id
+from costreduce.core.providers.aws import account_id
 
 logger = logging.getLogger(__name__)
 
