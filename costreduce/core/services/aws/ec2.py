@@ -8,18 +8,18 @@ logger = logging.getLogger(__name__)
 class Ec2Analyze:
     """ Class for Analyze all EC2 Services """
 
-    def __init__(self, sts, region):
+    def __init__(self, sdk, region):
         """
         init function
         Arguments:
-            sts: import boto3 globaly
+            sdk: import boto3 globaly
             region: Cloud Provider region
         """
-        self.sts = sts
+        self.sdk = sdk
         self.region = region
-        self.compute_optimizer = ComputeOptimizer(self.sts, self.region)
-        self.application_load_balancer = ApplicationLoadBalancer(self.sts, self.region)
-        self.ec2 = Ec2(self.sts, self.region)
+        self.compute_optimizer = ComputeOptimizer(self.sdk, self.region)
+        self.application_load_balancer = ApplicationLoadBalancer(self.sdk, self.region)
+        self.ec2 = Ec2(self.sdk, self.region)
 
     def analyze(self):
         """
@@ -47,16 +47,16 @@ class Ec2Analyze:
 class Ec2:
     """ Class for all EC2 services """
 
-    def __init__(self, sts, region):
+    def __init__(self, sdk, region):
         """
         init function
         Arguments:
-            sts: import boto3 globaly
+            sdk: import boto3 globaly
             region: Cloud Provider region
         """
-        self.sts = sts
+        self.sdk = sdk
         self.region = region
-        self.client_ec2 = sts.client("ec2", region_name=region)
+        self.client_ec2 = sdk.client("ec2", region_name=region)
 
     def eip_is_not_attached(self):
         addresses_dict = self.client_ec2.describe_addresses()
@@ -72,16 +72,16 @@ class Ec2:
 class ApplicationLoadBalancer:
     """ Class for all ALBv2 services """
 
-    def __init__(self, sts, region):
+    def __init__(self, sdk, region):
         """
         init function
         Arguments:
-            sts: import boto3 globaly
+            sdk: import boto3 globaly
             region: Cloud Provider region
         """
-        self.sts = sts
+        self.sdk = sdk
         self.region = region
-        self.client = sts.client("elbv2", region_name=region)
+        self.client = sdk.client("elbv2", region_name=region)
 
     def alb_listener_one_rule(self):
         response = list()
@@ -127,15 +127,15 @@ class ApplicationLoadBalancer:
 
 
 class ComputeOptimizer:
-    def __init__(self, sts, region):
+    def __init__(self, sdk, region):
         """
         init function
         Arguments:
-            sts: import boto3 globaly
+            sdk: import boto3 globaly
             region: Cloud Provider region
         """
         self.region = region
-        self.client = sts.client("compute-optimizer", region_name=region)
+        self.client = sdk.client("compute-optimizer", region_name=region)
         self.account_id = account_id()
 
     def is_active(self):

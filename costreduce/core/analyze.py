@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 class Analyze:
     """ Entrypoint for Analyze command """
 
-    def __init__(self, provider, service, region):
+    def __init__(self, provider, service, region, sdk=boto3):
         """
         init function
         Arguments:
@@ -23,15 +23,16 @@ class Analyze:
         self.provider = provider
         self.service = service
         self.region = region
+        self.sdk = sdk
 
     def aws(self):
         """
         Entrypoint for AWS provider
         """
         if self.service == "ec2":
-            return Ec2Analyze(boto3, self.region).analyze()
+            return Ec2Analyze(self.sdk, self.region).analyze()
         elif self.service == "cloudwatch":
-            return CloudwatchAnalyze(boto3, self.region).analyze()
+            return CloudwatchAnalyze(self.sdk, self.region).analyze()
         else:
             logger.info("Service " + str(self.service) + " don't allow!")
             sys.exit(1)
