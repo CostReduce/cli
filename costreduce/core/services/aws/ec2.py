@@ -152,7 +152,7 @@ class ComputeOptimizer:
         get_ec2_recommendation = self.client.get_ec2_instance_recommendations()
         for ec2_recommendation in get_ec2_recommendation["instanceRecommendations"]:
             logger.debug(ec2_recommendation)
-            ec2_instances_name = ec2_recommendation["instanceName"]
+            ec2_instances_arn = ec2_recommendation["instanceArn"]
             ec2_instances_current_instance_type = ec2_recommendation[
                 "currentInstanceType"
             ]
@@ -165,7 +165,7 @@ class ComputeOptimizer:
             ):
                 data = (
                     "For instance "
-                    + ec2_instances_name
+                    + ec2_instances_arn
                     + " change type "
                     + ec2_instances_current_instance_type
                     + " to "
