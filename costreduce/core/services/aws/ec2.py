@@ -151,6 +151,7 @@ class ComputeOptimizer:
         response = list()
         get_ec2_recommendation = self.client.get_ec2_instance_recommendations()
         for ec2_recommendation in get_ec2_recommendation["instanceRecommendations"]:
+            logger.debug(ec2_recommendation)
             ec2_instances_name = ec2_recommendation["instanceName"]
             ec2_instances_current_instance_type = ec2_recommendation[
                 "currentInstanceType"
@@ -183,6 +184,7 @@ class ComputeOptimizer:
         for scaling_group_recommendation in get_auto_scaling_group_recommendations[
             "autoScalingGroupRecommendations"
         ]:
+            logger.debug(scaling_group_recommendation)
             asg_name = scaling_group_recommendation["autoScalingGroupName"]
             asg_current = scaling_group_recommendation["currentConfiguration"][
                 "instanceType"
