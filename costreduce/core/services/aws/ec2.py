@@ -85,7 +85,7 @@ class ApplicationLoadBalancer:
 
     def alb_listener_one_rule(self):
         response = list()
-        alb_listener_arn = self.__alb_listener_arn()
+        alb_listener_arn = self.get_alb_listener_arn()
         for listenerArn in alb_listener_arn:
             rules_dict = self.client.describe_rules(ListenerArn=listenerArn)
             for rule in rules_dict["Rules"]:
@@ -109,7 +109,7 @@ class ApplicationLoadBalancer:
                         response.append(data)
         return response
 
-    def __alb_listener_arn(self):
+    def get_alb_listener_arn(self):
         response = list()
         alb_arn = self.get_elb_arn()
         for alb in alb_arn:
