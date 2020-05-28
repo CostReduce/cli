@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import boto3
 from moto import mock_elbv2, mock_ec2
-from costreduce.core.services.aws.ec2 import ApplicationLoadBalancer
+from costreduce.core.services.aws.ec2 import ApplicationLoadBalancer, Ec2
 
 
 @mock_elbv2
@@ -108,3 +108,25 @@ def test_get_alb_listener_one_rule_is_not_empty(boto3_mock):
     result = aws.get_alb_listener_arn()
     print(result)
     result.should.equal([http_listener_arn])
+
+
+@mock_ec2
+@mock_elbv2
+def test_ebs_is_not_attached_empty(boto3_mock):
+    aws = Ec2(boto3_mock, "us-east-1")
+    result = aws.ebs_is_not_attached()
+    result.should.equal([])
+
+
+@mock_ec2
+@mock_elbv2
+def test_ebs_is_not_attached_not_empty(boto3_mock):
+    conn = boto3.client("ec2", region_name="us-east-1")
+    conn.create_volume(Size=80, AvailabilityZone="us-east-1a")
+    all_volumes = conn.describe_volumes()
+    current_volume = all_volumes["Volumes"][0]["VolumeId"]
+
+    aws = Ec2(boto3_mock, "us-east-1")
+    result = aws.ebs_is_not_attached()
+    print(current_volume)
+    result.should.equal(["Remove this EBS " + current_volume + " because is not use."])

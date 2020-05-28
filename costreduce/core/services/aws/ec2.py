@@ -39,7 +39,9 @@ class Ec2Analyze:
         # ALB
         logger.info("Check for ALB")
         analyze.append(self.application_load_balancer.alb_listener_one_rule())
-
+        # EBS
+        logger.info("Check for EBS")
+        analyze.append(self.ec2.ebs_is_not_attached())
         logger.debug("Result of analyze : " + str(analyze))
         return analyze
 
@@ -64,6 +66,20 @@ class Ec2:
         for eip_dict in addresses_dict["Addresses"]:
             if "InstanceId" not in eip_dict:
                 data = "Remove EIPs when not in use : " + str(eip_dict["AllocationId"])
+                logger.debug(data)
+                response.append(data)
+        return response
+
+    def ebs_is_not_attached(self):
+        full_dict = self.client_ec2.describe_volumes(
+            Filters=[{"Name": "status", "Values": ["available",]},],
+        )
+        response = list()
+        for ebs_dict in full_dict["Volumes"]:
+            logger.debug(ebs_dict)
+            volume_id = ebs_dict["VolumeId"]
+            data = "Remove this EBS " + str(volume_id) + " because is not use."
+            if data not in response:
                 logger.debug(data)
                 response.append(data)
         return response
