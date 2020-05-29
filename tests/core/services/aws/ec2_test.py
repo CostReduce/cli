@@ -111,7 +111,6 @@ def test_get_alb_listener_one_rule_is_not_empty(boto3_mock):
 
 
 @mock_ec2
-@mock_elbv2
 def test_ebs_is_not_attached_empty(boto3_mock):
     aws = Ec2(boto3_mock, "us-east-1")
     result = aws.ebs_is_not_attached()
@@ -119,7 +118,6 @@ def test_ebs_is_not_attached_empty(boto3_mock):
 
 
 @mock_ec2
-@mock_elbv2
 def test_ebs_is_not_attached_not_empty(boto3_mock):
     conn = boto3.client("ec2", region_name="us-east-1")
     conn.create_volume(Size=80, AvailabilityZone="us-east-1a")
@@ -130,3 +128,10 @@ def test_ebs_is_not_attached_not_empty(boto3_mock):
     result = aws.ebs_is_not_attached()
     print(current_volume)
     result.should.equal(["Remove this EBS " + current_volume + " because is not use."])
+
+
+@mock_ec2
+def test_eip_is_not_attached_empty(boto3_mock):
+    aws = Ec2(boto3_mock, "us-east-1")
+    result = aws.eip_is_not_attached()
+    result.should.equal([])
