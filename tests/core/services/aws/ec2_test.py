@@ -60,7 +60,27 @@ def fixture_alb(boto3_mock):
     )
     listener = response.get("Listeners")[0]
     http_listener_arn = listener.get("ListenerArn")
-    yield { "load_balancer_arn": load_balancer_arn, "http_listener_arn": http_listener_arn }
+
+    # create first rule
+    priority = 100
+    host = "xxx.example.com"
+    path_pattern = "foobar"
+    created_rule = conn.create_rule(
+        ListenerArn=http_listener_arn,
+        Priority=priority,
+        Conditions=[
+            {"Field": "host-header", "Values": [host]},
+            {"Field": "path-pattern", "Values": [path_pattern]},
+        ],
+        Actions=[
+            {"TargetGroupArn": target_group.get("TargetGroupArn"), "Type": "forward"}
+        ],
+    )["Rules"][0]
+
+    yield {
+        "load_balancer_arn": load_balancer_arn,
+        "http_listener_arn": http_listener_arn,
+    }
     mock_elbv2().stop()
     mock_ec2().stop()
 
@@ -75,9 +95,7 @@ def test_get_alb_arn_is_empty(boto3_mock):
 def test_get_alb_arn_is_not_empty(boto3_mock, fixture_alb):
     aws = ApplicationLoadBalancer(boto3_mock, "us-east-1")
     result = aws.get_elb_arn()
-    result.should.equal(
-        [fixture_alb["load_balancer_arn"]]
-    )
+    result.should.equal([fixture_alb["load_balancer_arn"]])
 
 
 @mock_ec2

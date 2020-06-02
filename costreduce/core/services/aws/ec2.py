@@ -5,7 +5,7 @@ from costreduce.core.providers.aws import account_id
 logger = logging.getLogger(__name__)
 
 
-class Ec2Analyze:
+class Ec2Analyze:  # pragma: no cover
     """ Class for Analyze all EC2 Services """
 
     def __init__(self, sdk, region):
@@ -64,7 +64,7 @@ class Ec2:
         addresses_dict = self.client_ec2.describe_addresses()
         response = list()
         for eip_dict in addresses_dict["Addresses"]:
-            if "InstanceId" not in eip_dict:
+            if "InstanceId" not in eip_dict:  # pragma: no cover
                 data = "Remove EIPs when not in use : " + str(eip_dict["AllocationId"])
                 logger.debug(data)
                 response.append(data)
@@ -108,7 +108,6 @@ class ApplicationLoadBalancer:
                 count = 0
                 for i in rule["Conditions"]:
                     if rule["Priority"] != "default":
-                        # print(rule)
                         count += 1
                 if count < 2:
                     listener_to_elb = self.client.describe_listeners(
@@ -142,7 +141,7 @@ class ApplicationLoadBalancer:
         return response
 
 
-class ComputeOptimizer:
+class ComputeOptimizer:  # pragma: no cover (Not supported by Moto)
     def __init__(self, sdk, region):
         """
         init function
