@@ -38,7 +38,7 @@ def cli():
     prompt="Service name",
     default="ec2",
     help="Get Service Name.",
-    type=click.Choice(["ec2", "cloudwatch"], case_sensitive=False),
+    type=click.Choice(["ec2", "cloudwatch", "s3"], case_sensitive=False),
 )
 @click.option(
     "-r",

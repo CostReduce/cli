@@ -4,6 +4,7 @@ import sys
 import boto3
 from costreduce.core.services.aws.ec2 import Ec2Analyze
 from costreduce.core.services.aws.cloudwatch import CloudwatchAnalyze
+from costreduce.core.services.aws.s3 import S3Analyze
 
 
 logger = logging.getLogger(__name__)
@@ -31,6 +32,8 @@ class Analyze:
         """
         if self.service == "ec2":
             return Ec2Analyze(self.sdk, self.region).analyze()
+        elif self.service == "s3":
+            return S3Analyze(self.sdk, self.region).analyze()
         elif self.service == "cloudwatch":
             return CloudwatchAnalyze(self.sdk, self.region).analyze()
         else:
