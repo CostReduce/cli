@@ -56,7 +56,16 @@ def analyze(provider, service, region):
         logger.info("Provider " + str(provider) + " don't allow!")
         sys.exit(1)
 
-    grid(response, provider, service, region)
+    if service == "s3":
+        type = "Storage"
+    elif service == "ec2":
+        type = "Compute"
+    elif service == "cloudwatch":
+        type = "Management"
+    else:
+        type = "null"
+
+    grid(response, provider, type, service, region)
 
 
 if __name__ == "__main__":
